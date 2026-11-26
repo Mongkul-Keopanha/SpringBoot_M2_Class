@@ -1,0 +1,33 @@
+package kh.edu.istad.restapi.init;
+
+import jakarta.annotation.PostConstruct;
+import kh.edu.istad.restapi.model.User;
+import kh.edu.istad.restapi.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+
+@Slf4j
+@Component
+@RequiredArgsConstructor
+public class UserInitialization {
+    private UserRepository userRepository;
+
+    @PostConstruct
+    void init(){
+        log.info("Initializing user data...");
+
+        // 1. Create entity object
+        User user1 = new User();
+        user1.setName("Sanford");
+        user1.setPassword("!@#45678");
+        user1.setRole("Software Developer");
+        user1.setActive(true);
+
+        // 2. Start saving user in database
+        if (userRepository.count() == 0) {
+            userRepository.save(user1);
+        }
+
+    }
+}
