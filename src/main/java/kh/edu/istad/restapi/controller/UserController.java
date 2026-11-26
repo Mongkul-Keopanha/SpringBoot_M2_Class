@@ -1,9 +1,11 @@
 package kh.edu.istad.restapi.controller;
 
 import kh.edu.istad.restapi.dto.CreateUserRequest;
+import kh.edu.istad.restapi.dto.UserResponse;
 import kh.edu.istad.restapi.model.User;
 import kh.edu.istad.restapi.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,13 +19,21 @@ import java.util.UUID;
 public class UserController {
     private final UserService userService;
 
+    @GetMapping("paging")
+    public Page<UserResponse> getAllUserWithPaging(
+            @RequestParam(defaultValue = "0") int pageNumber,
+            @RequestParam(defaultValue = "25") int pageSize
+    ){
+        return userService.getAllUserWithPaging(pageNumber, pageSize);
+    }
+
     @GetMapping
-    public List<User> getAll() {
+    public List<UserResponse> getAll() {
         return userService.getAll();
     }
 
     @GetMapping("/{id}")
-    public User getById(@PathVariable UUID id) {
+    public UserResponse getById(@PathVariable UUID id) {
         return userService.getById(id);
     }
 

@@ -13,8 +13,11 @@ import java.util.Map;
 @Slf4j
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler
+    @ExceptionHandler(ResponseStatusException.class)
     public ResponseEntity<?> handleResponseStatusException(ResponseStatusException e) {
+        log.error("Response status exception occurred");
+        log.error("Status: {}", e.getStatusCode());
+        log.error("Reason: {}", e.getReason());
         Map<String, Object> body = new HashMap<>();
         body.put("message", e.getReason());
         body.put("status", e.getStatusCode());

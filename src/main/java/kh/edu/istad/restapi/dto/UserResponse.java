@@ -1,8 +1,10 @@
 package kh.edu.istad.restapi.dto;
 
+import java.util.UUID;
+
 public record UserResponse(
-        int id,
+        UUID id,
         String name,
-        String email,
-        String role
+        String username,
+        Boolean isActive
 ) {}
